@@ -83,8 +83,10 @@ output_file_path="${_input_file_dirname}/${_input_file_basename_without_extensio
 # Add watermark to image and save the result.              #
 ############################################################
 
-convert ${input_file_path} \
-\( -size ${font_size}x -background none -fill "#8339" -gravity center \
+font=$(fc-match -f '%{file}' 2>/dev/null)
+
+magick ${input_file_path} \
+\( -size ${font_size}x -background none -fill "#8339" -gravity center -font "${font}" \
 label:"${wm_text}" -trim -rotate -10 \
 -bordercolor none -border 5 \
 -write mpr:wm +delete \
